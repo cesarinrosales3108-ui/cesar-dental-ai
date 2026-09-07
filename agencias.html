@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Equipo Virtual para agencias — cotizadores instantáneos white label para sus clientes de techado</title>
+<meta name="description" content="Construyo cotizadores instantáneos con la marca de sus clientes de techado, solar, HVAC o plomería. Usted se queda con el cliente, sale bajo su nombre. $1,200-2,500 por build, primeros proyectos.">
+<meta name="theme-color" content="#0a0e14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fuente-display: "Barlow Condensed", "Segoe UI", system-ui, sans-serif;
+    --fuente-cuerpo: "Inter", "Segoe UI", system-ui, sans-serif;
+    --fuente-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+    --noche: #0a0e14; --navy: #141b28; --navy-2: #1e2a3d;
+    --sol: #ff6b1a; --sol-2: #ff8c42; --amanecer: #ffd23f;
+    --crema: #f5f3ee; --texto: #0f1620; --muted: #5b6674;
+    --linea: #d9d4c7; --superficie: #ffffff; --fondo: var(--crema);
+    --sombra: 0 1px 2px rgba(10,14,20,0.06), 0 12px 32px rgba(10,14,20,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --texto: #eef1f5; --muted: #8b96a5; --linea: #26313f;
+      --superficie: #131a26; --fondo: #0a0e14;
+      --sombra: 0 1px 3px rgba(0,0,0,0.5), 0 14px 36px rgba(0,0,0,0.55);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--fuente-cuerpo); margin: 0; color: var(--texto); line-height: 1.55; background: var(--fondo); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  ::selection { background: var(--sol); color: #fff; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: var(--fuente-mono); }
+
+  header.hero {
+    background: radial-gradient(ellipse 900px 500px at 82% -10%, rgba(255,107,26,0.22), transparent 60%),
+      linear-gradient(180deg, var(--noche) 0%, #0d1119 100%);
+    color: var(--crema); padding: 28px 0 64px; position: relative; overflow: hidden;
+  }
+  .barra-marca { display: flex; align-items: center; justify-content: space-between; gap: 11px; padding-bottom: 40px; flex-wrap: wrap; }
+  .marca-izq { display: flex; align-items: center; gap: 10px; }
+  .marca-sol { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--amanecer), var(--sol) 70%); box-shadow: 0 0 22px rgba(255,107,26,0.55); flex-shrink: 0; }
+  .barra-marca .nombre { font-family: var(--fuente-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+  .barra-marca .nombre b { color: var(--sol-2); }
+  .barra-marca .tag { font-family: var(--fuente-mono); font-size: 11px; color: rgba(245,243,238,0.5); letter-spacing: 0.05em; }
+  .hero-inner { text-align: center; max-width: 760px; margin: 0 auto; }
+  .eyebrow-hero { font-family: var(--fuente-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sol-2); margin: 0 0 22px; display: inline-flex; align-items: center; gap: 8px; }
+  .eyebrow-hero::before, .eyebrow-hero::after { content: ""; width: 22px; height: 1px; background: rgba(255,140,66,0.5); }
+  h1.claim { font-family: var(--fuente-display); font-weight: 800; letter-spacing: -0.5px; font-size: clamp(32px, 5.4vw, 62px); line-height: 1.04; margin: 0 auto 22px; }
+  h1.claim .linea2 { display: block; color: var(--sol-2); }
+  .hero-sub { font-size: clamp(15.5px, 1.7vw, 19px); color: rgba(245,243,238,0.82); max-width: 560px; margin: 0 auto 38px; }
+  .cta-primaria { display: inline-flex; align-items: center; gap: 10px; background: var(--sol); color: #fff; font-weight: 700; font-size: 16.5px; padding: 17px 34px; border-radius: 10px; text-decoration: none; box-shadow: 0 16px 40px rgba(255,107,26,0.38); transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease; }
+  .cta-primaria:hover { background: var(--sol-2); transform: translateY(-2px); box-shadow: 0 20px 46px rgba(255,107,26,0.48); }
+  .cta-primaria svg { width: 19px; height: 19px; }
+  .cta-secundaria { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--crema); font-weight: 600; font-size: 14.5px; padding: 15px 26px; border-radius: 10px; text-decoration: none; margin-left: 12px; border: 1.5px solid rgba(245,243,238,0.28); }
+  .cta-nota { display: block; margin-top: 15px; font-family: var(--fuente-mono); font-size: 11.5px; color: rgba(245,243,238,0.45); }
+  header.hero::after { content: ""; display: block; height: 3px; margin-top: 40px; background: linear-gradient(90deg, var(--navy) 0%, var(--sol) 50%, var(--amanecer) 100%); }
+
+  main { padding: 0; }
+  section { padding: 72px 0; }
+  .sec-eyebrow { font-family: var(--fuente-mono); font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sol); text-align: center; margin: 0 0 12px; }
+  section h2.titulo { font-family: var(--fuente-display); font-weight: 700; font-size: clamp(24px, 3.2vw, 38px); text-align: center; margin: 0 0 12px; letter-spacing: -0.5px; }
+  section p.titulo-sub { text-align: center; color: var(--muted); font-size: 16px; max-width: 600px; margin: 0 auto 48px; }
+
+  .pasos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
+  .paso { background: var(--superficie); border: 1px solid var(--linea); border-radius: 14px; padding: 28px 24px; box-shadow: var(--sombra); }
+  .paso .num { font-family: var(--fuente-mono); font-size: 12px; font-weight: 700; color: var(--sol); letter-spacing: 0.06em; margin-bottom: 10px; }
+  .paso h3 { font-family: var(--fuente-display); font-weight: 600; font-size: 18px; margin: 0 0 8px; }
+  .paso p { margin: 0; color: var(--muted); font-size: 13.5px; }
+
+  .franja { background: var(--noche); color: var(--crema); border-radius: 20px; padding: 46px 40px; position: relative; overflow: hidden; text-align: center; }
+  .franja::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 500px 300px at 50% 0%, rgba(255,140,66,0.18), transparent 70%); }
+  .franja-eyebrow { font-family: var(--fuente-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sol-2); position: relative; }
+  .franja h2 { font-family: var(--fuente-display); font-weight: 700; font-size: clamp(22px, 3.2vw, 34px); margin: 12px auto 14px; position: relative; max-width: 640px; }
+  .franja p.sub { position: relative; opacity: 0.78; max-width: 520px; margin: 0 auto; font-size: 15px; }
+
+  .precio-card { max-width: 520px; margin: 0 auto; background: var(--superficie); border: 2px solid var(--sol); border-radius: 18px; padding: 38px 34px; text-align: center; box-shadow: var(--sombra); }
+  .precio-card .badge { display: inline-block; background: var(--sol); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 18px; }
+  .precio-card .monto { font-family: var(--fuente-display); font-weight: 800; font-size: 48px; letter-spacing: -1px; }
+  .precio-card .monto span { font-size: 16px; font-weight: 500; color: var(--muted); font-family: var(--fuente-cuerpo); }
+  .precio-card ul { list-style: none; padding: 0; margin: 22px 0 26px; text-align: left; }
+  .precio-card li { padding: 7px 0; font-size: 14px; display: flex; gap: 10px; }
+  .precio-card li svg { width: 15px; height: 15px; color: var(--sol); flex-shrink: 0; margin-top: 3px; }
+  .precio-nota { max-width: 560px; margin: 22px auto 0; text-align: center; font-size: 13px; color: var(--muted); }
+
+  .honestidad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 860px; margin: 0 auto; }
+  .honestidad-col { background: var(--superficie); border: 1px solid var(--linea); border-radius: 16px; padding: 28px; box-shadow: var(--sombra); }
+  .honestidad-col h3 { font-family: var(--fuente-display); font-weight: 700; font-size: 16px; margin: 0 0 14px; }
+  .honestidad-col.si h3 { color: #1a8a52; }
+  .honestidad-col.no h3 { color: #b42318; }
+  .honestidad-col ul { list-style: none; margin: 0; padding: 0; }
+  .honestidad-col li { font-size: 13px; color: var(--muted); padding: 6px 0; padding-left: 18px; position: relative; }
+  .honestidad-col li::before { content: "—"; position: absolute; left: 0; opacity: 0.5; }
+  @media (max-width: 620px) { .honestidad-grid { grid-template-columns: 1fr; } }
+
+  .faq-wrap { max-width: 700px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--linea); padding: 20px 0; }
+  .faq-item h3 { font-family: var(--fuente-display); font-weight: 600; margin: 0 0 6px; font-size: 16px; }
+  .faq-item p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .contacto-card { max-width: 540px; margin: 0 auto; text-align: center; }
+  .contacto-card p { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+
+  footer { text-align: center; padding: 46px 22px 60px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--linea); }
+  footer .marca-footer { font-family: var(--fuente-mono); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto); margin-bottom: 8px; }
+  footer .marca-footer b { color: var(--sol); }
+  footer p { margin: 4px 0; }
+  footer a.volver { color: var(--sol); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .franja { padding: 34px 22px; }
+    .cta-secundaria { margin-left: 0; margin-top: 12px; display: block; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="barra-marca">
+      <div class="marca-izq">
+        <div class="marca-sol"></div>
+        <span class="nombre">Equipo<b>Virtual</b></span>
+      </div>
+      <span class="tag">White label · Para agencias de marketing</span>
+    </div>
+
+    <div class="hero-inner">
+      <span class="eyebrow-hero">Para agencias, no para el dueño final</span>
+      <h1 class="claim">Sus clientes de techado piden un cotizador.<span class="linea2">Yo se lo construyo, usted lo entrega.</span></h1>
+      <p class="hero-sub">Un cotizador instantáneo con la marca de su cliente — logo, colores, su nombre. Usted se queda con la relación, sale bajo su firma. Yo me quedo detrás, sin hablarle nunca a su cliente salvo que usted lo pida.</p>
+
+      <div>
+        <a class="cta-primaria" href="mailto:hola@mail.cesarbuilds.com?subject=Quiero%20saber%20m%C3%A1s%20sobre%20white%20label">
+          Escribir ahora
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+        </a>
+        <a class="cta-secundaria" href="../demo/estimador-su-empresa.html" target="_blank" rel="noopener">Ver un ejemplo</a>
+      </div>
+      <span class="cta-nota">Sin compromiso · respuesta el mismo día</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="como-funciona" class="wrap">
+    <p class="sec-eyebrow">Cómo funciona</p>
+    <h2 class="titulo">Tres pasos, usted mantiene el control</h2>
+    <p class="titulo-sub">No hablo con su cliente a menos que usted me lo pida — el trabajo sale con su nombre.</p>
+    <div class="pasos-grid">
+      <div class="paso">
+        <div class="num">01</div>
+        <h3>Usted me da la marca</h3>
+        <p>Nombre del contratista, colores, logo si lo tiene. Cinco minutos de su parte.</p>
+      </div>
+      <div class="paso">
+        <div class="num">02</div>
+        <h3>Yo construyo y le mando el demo</h3>
+        <p>Un archivo autocontenido, listo para probar, con la marca de su cliente puesta.</p>
+      </div>
+      <div class="paso">
+        <div class="num">03</div>
+        <h3>Usted lo entrega bajo su nombre</h3>
+        <p>Su cliente nunca sabe quién lo construyó, salvo que usted decida contarle.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="franja">
+      <span class="franja-eyebrow">Lo que realmente hace</span>
+      <h2>El visitante pone las medidas, sale un rango de precio</h2>
+      <p class="sub">Techo, tamaño, material, pendiente, capas a quitar — el visitante llena el formulario y recibe un rango de precio al instante, con supuestos por escrito y fecha de validez. No mide por satélite: pregunta, no adivina.</p>
+    </div>
+  </section>
+
+  <section id="precio" class="wrap">
+    <p class="sec-eyebrow">Precio</p>
+    <h2 class="titulo">Sin mensualidad, un pago por build</h2>
+    <p class="titulo-sub">Usted decide si le cobra a su cliente por separado o lo incluye en su paquete.</p>
+    <div class="precio-card">
+      <span class="badge">Primeros proyectos</span>
+      <div class="monto">$1,200–2,500<span>/build</span></div>
+      <ul>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Un archivo, la marca de su cliente</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Demo antes de pagar nada</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Puedo cargar el mantenimiento mensual, sin que le toque a su equipo</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Usted mantiene la relación con el cliente</li>
+      </ul>
+      <a class="cta-primaria" style="margin-top:0;width:100%;justify-content:center;" href="mailto:hola@mail.cesarbuilds.com?subject=Quiero%20mi%20primer%20build%20white%20label">Pedir mi primer build</a>
+    </div>
+    <p class="precio-nota">Precio de entrada mientras construyo mis primeros casos de estudio — sube en cuanto tenga unos cuantos. El precio con el que empieza se queda mientras siga trabajando conmigo.</p>
+  </section>
+
+  <section id="honestidad" class="wrap">
+    <p class="sec-eyebrow">Antes de escribir</p>
+    <h2 class="titulo">Para decidir con la información completa</h2>
+    <div class="honestidad-grid">
+      <div class="honestidad-col si">
+        <h3>✓ Sí hace</h3>
+        <ul>
+          <li>Precio al instante con las medidas que da el visitante</li>
+          <li>Marca completa de su cliente (nombre, colores, logo)</li>
+          <li>Archivo autocontenido — no depende de mi servidor para funcionar</li>
+          <li>Un solo pago, sin mensualidad obligatoria</li>
+        </ul>
+      </div>
+      <div class="honestidad-col no">
+        <h3>✕ No hace</h3>
+        <ul>
+          <li>No mide el techo por satélite (para eso, Roofr lo hace mejor)</li>
+          <li>No reemplaza un CRM ni el sitio completo del cliente</li>
+          <li>Todavía no tengo un caso pagado con resultados medidos — usted sería de los primeros</li>
+          <li>No soy una agencia: trabajo solo, pocos builds al mes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="wrap">
+    <p class="sec-eyebrow">Preguntas frecuentes</p>
+    <h2 class="titulo">Lo que preguntan antes de empezar</h2>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <h3>¿Cuánto tarda un build?</h3>
+        <p>Unos días desde que confirma la marca y los datos del cliente. Se lo mando como demo antes de cobrar nada.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Puedo revenderlo a varios clientes?</h3>
+        <p>Sí — cada build es por cliente, con su propia marca. No hay límite de cuántos me pida.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Ustedes hablan directo con mi cliente?</h3>
+        <p>No, salvo que usted lo pida explícitamente. El trabajo sale con su nombre, no el mío.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Y si mi cliente quiere cambios después?</h3>
+        <p>Los primeros ajustes van incluidos. Cambios grandes (otro tipo de trabajo, otro flujo) se cotizan aparte.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="wrap">
+    <div class="contacto-card">
+      <h2 class="titulo">¿Tiene un cliente que ya pregunta por esto?</h2>
+      <p>Escríbame y le mando un demo con la marca de su cliente para que lo vea antes de decidir.</p>
+      <a class="cta-primaria" href="mailto:hola@mail.cesarbuilds.com?subject=Quiero%20saber%20m%C3%A1s%20sobre%20white%20label">
+        Escribir ahora
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="marca-footer">Equipo<b>Virtual</b></div>
+  <p>Cotizadores instantáneos white label para agencias que sirven contratistas residenciales.</p>
+  <p><a class="volver" href="index.html">← ¿Es dueño de un negocio de techado o solar? Vea la oferta directa</a></p>
+</footer>
+
+</body>
+</html>
