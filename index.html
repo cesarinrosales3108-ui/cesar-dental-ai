@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Equipo Virtual — Recepción, ventas y seguimiento para instaladores solares, sin nómina</title>
-<meta name="description" content="La primera empresa en responder un lead solar se queda con el 78% de las ventas. Su Equipo Virtual responde en menos de 60 segundos, cotiza, agenda y da seguimiento — 24/7, sin contratar a nadie.">
+<title>Equipo Virtual — Recepción y seguimiento 24/7 para techadores e instaladores solares, sin nómina</title>
+<meta name="description" content="Recepción 24/7 por SMS, recordatorios de cita y seguimiento automático para techadores e instaladores solares. $500/mes, $0 de instalación, sin nómina.">
 <meta name="theme-color" content="#0a0e14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,6 @@
     --fuente-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
 
     --noche: #0a0e14;
-    --noche-2: #12182450;
     --navy: #141b28;
     --navy-2: #1e2a3d;
     --sol: #ff6b1a;
@@ -29,6 +28,8 @@
     --superficie: #ffffff;
     --fondo: var(--crema);
     --sombra: 0 1px 2px rgba(10,14,20,0.06), 0 12px 32px rgba(10,14,20,0.08);
+    --azul-tech: #2a6ee0;
+    --verde-ok: #1a8a52;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -55,7 +56,7 @@
       linear-gradient(180deg, var(--noche) 0%, #0d1119 100%);
     color: var(--crema); padding: 28px 0 0; position: relative; overflow: hidden;
   }
-  .barra-marca { display: flex; align-items: center; justify-content: space-between; gap: 11px; position: relative; padding-bottom: 40px; }
+  .barra-marca { display: flex; align-items: center; justify-content: space-between; gap: 11px; position: relative; padding-bottom: 40px; flex-wrap: wrap; }
   .marca-izq { display: flex; align-items: center; gap: 10px; }
   .marca-sol {
     width: 34px; height: 34px; border-radius: 50%;
@@ -74,17 +75,17 @@
   .eyebrow-hero::before, .eyebrow-hero::after { content: ""; width: 22px; height: 1px; background: rgba(255,140,66,0.5); }
   h1.claim {
     font-family: var(--fuente-display); font-weight: 800; letter-spacing: -0.5px;
-    font-size: clamp(38px, 6.6vw, 84px); line-height: 0.98; margin: 0 auto 26px; max-width: 920px;
+    font-size: clamp(36px, 6.2vw, 78px); line-height: 1.0; margin: 0 auto 26px; max-width: 940px;
   }
   h1.claim .linea2 { display: block; color: var(--sol-2); }
   .hero-sub {
-    font-size: clamp(15.5px, 1.7vw, 19px); color: rgba(245,243,238,0.82); max-width: 560px;
+    font-size: clamp(15.5px, 1.7vw, 19px); color: rgba(245,243,238,0.82); max-width: 600px;
     margin: 0 auto 42px; font-weight: 400;
   }
 
   /* Ventana de oro — la firma visual */
   .ventana-oro {
-    max-width: 760px; margin: 0 auto 60px; border-radius: 16px;
+    max-width: 760px; margin: 0 auto 48px; border-radius: 16px;
     border: 1px solid rgba(255,210,63,0.18); background: rgba(20,27,40,0.6); backdrop-filter: blur(6px);
     box-shadow: 0 30px 80px rgba(0,0,0,0.45); padding-top: 34px;
   }
@@ -128,6 +129,12 @@
   }
   .cta-primaria:hover { background: var(--sol-2); transform: translateY(-2px); box-shadow: 0 20px 46px rgba(255,107,26,0.48); }
   .cta-primaria svg { width: 19px; height: 19px; }
+  .cta-secundaria {
+    display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--crema);
+    font-weight: 600; font-size: 14.5px; padding: 15px 26px; border-radius: 10px; text-decoration: none;
+    margin-top: 46px; margin-left: 12px; border: 1.5px solid rgba(245,243,238,0.28); transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .cta-secundaria:hover { border-color: rgba(245,243,238,0.55); background: rgba(245,243,238,0.06); }
   .cta-nota { display: block; margin-top: 15px; font-family: var(--fuente-mono); font-size: 11.5px; color: rgba(245,243,238,0.45); }
 
   header.hero::after {
@@ -181,7 +188,7 @@
   section { padding: 78px 0; }
   .sec-eyebrow { font-family: var(--fuente-mono); font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sol); text-align: center; margin: 0 0 12px; }
   section h2.titulo { font-family: var(--fuente-display); font-weight: 700; font-size: clamp(26px, 3.4vw, 40px); text-align: center; margin: 0 0 12px; letter-spacing: -0.5px; }
-  section p.titulo-sub { text-align: center; color: var(--muted); font-size: 16px; max-width: 600px; margin: 0 auto 52px; }
+  section p.titulo-sub { text-align: center; color: var(--muted); font-size: 16px; max-width: 620px; margin: 0 auto 52px; }
 
   /* Dolor — anatomía del lead perdido */
   .dolor-fila { max-width: 880px; margin: 0 auto; }
@@ -206,10 +213,10 @@
   }
   .franja-eyebrow { font-family: var(--fuente-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sol-2); position: relative; }
   .franja h2 { font-family: var(--fuente-display); font-weight: 700; font-size: clamp(24px, 3.4vw, 38px); margin: 12px auto 14px; position: relative; max-width: 680px; letter-spacing: -0.5px; }
-  .franja p.sub { position: relative; opacity: 0.78; max-width: 540px; margin: 0 auto; font-size: 15.5px; }
+  .franja p.sub { position: relative; opacity: 0.78; max-width: 560px; margin: 0 auto; font-size: 15.5px; }
 
-  /* Equipo Virtual — los 4 roles */
-  .equipo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+  /* Equipo Virtual — capacidades reales */
+  .equipo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; max-width: 840px; margin: 0 auto; }
   .equipo-item {
     background: var(--superficie); border: 1px solid var(--linea); border-radius: 14px;
     padding: 26px 24px; box-shadow: var(--sombra); transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -222,19 +229,60 @@
   .equipo-item h3 { font-family: var(--fuente-display); font-weight: 600; font-size: 18px; margin: 0 0 8px; letter-spacing: -0.2px; }
   .equipo-item p { margin: 0; color: var(--muted); font-size: 13.5px; }
 
+  /* Regalo — cotizador con tu marca */
+  .regalo-card {
+    max-width: 900px; margin: 0 auto; background: var(--superficie); border: 1.5px dashed var(--sol);
+    border-radius: 20px; padding: 40px; display: grid; grid-template-columns: auto 1fr; gap: 30px; align-items: center;
+    box-shadow: var(--sombra);
+  }
+  .regalo-icono {
+    width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, var(--sol), var(--amanecer));
+    display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 10px 24px rgba(255,107,26,0.32);
+  }
+  .regalo-icono svg { width: 32px; height: 32px; color: #fff; }
+  .regalo-texto h3 { font-family: var(--fuente-display); font-weight: 700; font-size: 22px; margin: 0 0 8px; letter-spacing: -0.3px; }
+  .regalo-texto p { margin: 0 0 6px; color: var(--muted); font-size: 14.5px; }
+  .regalo-texto .aclara {
+    font-family: var(--fuente-mono); font-size: 11.5px; color: var(--sol); margin-top: 10px; display: block;
+  }
+  .regalo-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 620px) {
+    .regalo-card { grid-template-columns: 1fr; text-align: center; }
+    .regalo-icono { margin: 0 auto; }
+    .regalo-ctas { justify-content: center; }
+  }
+
+  /* Qué sí / qué no */
+  .honestidad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 900px; margin: 0 auto; }
+  .honestidad-col { background: var(--superficie); border: 1px solid var(--linea); border-radius: 16px; padding: 30px; box-shadow: var(--sombra); }
+  .honestidad-col h3 { font-family: var(--fuente-display); font-weight: 700; font-size: 17px; margin: 0 0 16px; display: flex; align-items: center; gap: 9px; }
+  .honestidad-col.si h3 { color: var(--verde-ok); }
+  .honestidad-col.no h3 { color: #b42318; }
+  .honestidad-col ul { list-style: none; margin: 0; padding: 0; }
+  .honestidad-col li { font-size: 13.5px; color: var(--muted); padding: 7px 0; padding-left: 20px; position: relative; }
+  .honestidad-col li::before { content: "—"; position: absolute; left: 0; opacity: 0.5; }
+  .honestidad-nota { max-width: 700px; margin: 26px auto 0; text-align: center; font-size: 13.5px; color: var(--muted); font-style: italic; }
+  @media (max-width: 620px) { .honestidad-grid { grid-template-columns: 1fr; } }
+
   /* Planes */
-  .planes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 22px; max-width: 1000px; margin: 0 auto; }
+  .planes-grid { display: flex; justify-content: center; gap: 22px; max-width: 720px; margin: 0 auto; flex-wrap: wrap; }
   .plan-card {
     background: var(--superficie); border: 1px solid var(--linea); border-radius: 16px;
-    padding: 32px 28px; position: relative; display: flex; flex-direction: column;
+    padding: 32px 28px; position: relative; display: flex; flex-direction: column; width: 320px;
     box-shadow: var(--sombra); transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .plan-card:hover { transform: translateY(-4px); box-shadow: 0 4px 8px rgba(10,14,20,0.08), 0 20px 40px rgba(10,14,20,0.12); }
   .plan-card.destacado { border: 2px solid var(--sol); }
   .plan-card.destacado:hover { box-shadow: 0 4px 8px rgba(255,107,26,0.1), 0 24px 48px rgba(255,107,26,0.22); }
+  .plan-card.proximamente { opacity: 0.72; }
   .plan-card .badge-destacado {
     position: absolute; top: -13px; left: 32px;
     background: var(--sol); color: #fff; font-family: var(--fuente-cuerpo); font-weight: 700; font-size: 11px;
+    letter-spacing: 0.03em; text-transform: uppercase; padding: 5px 13px; border-radius: 999px;
+  }
+  .plan-card .badge-proximamente {
+    position: absolute; top: -13px; left: 32px;
+    background: var(--navy-2); color: var(--crema); font-family: var(--fuente-cuerpo); font-weight: 700; font-size: 11px;
     letter-spacing: 0.03em; text-transform: uppercase; padding: 5px 13px; border-radius: 999px;
   }
   .plan-card .nombre-plan { font-family: var(--fuente-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
@@ -252,6 +300,11 @@
   .plan-card.destacado .plan-cta { background: var(--sol); border-color: var(--sol); color: #fff; }
   .plan-card .plan-cta:hover { background: var(--texto); color: var(--fondo); }
   .plan-card.destacado .plan-cta:hover { background: var(--sol-2); border-color: var(--sol-2); color: #fff; }
+  .garantia-nota {
+    max-width: 620px; margin: 40px auto 0; text-align: center; font-size: 13.5px; color: var(--muted);
+    padding: 20px 26px; border: 1px solid var(--linea); border-radius: 12px; background: var(--superficie);
+  }
+  .garantia-nota b { color: var(--texto); }
 
   /* FAQ */
   .faq-wrap { max-width: 740px; margin: 0 auto; }
@@ -269,17 +322,19 @@
   footer { text-align: center; padding: 50px 22px 68px; color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--linea); }
   footer .marca-footer { font-family: var(--fuente-mono); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto); margin-bottom: 8px; }
   footer .marca-footer b { color: var(--sol); }
+  footer p { margin: 4px 0; }
 
-  .revelar { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  /* Oculto solo si JS confirma que puede animarlo (clase puesta por el script
+     al final del body); sin JS, .revelar se queda visible por defecto — la
+     animación es una mejora, nunca una condición para ver el contenido. */
+  .js-ok .revelar { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .revelar.visible { opacity: 1; transform: translateY(0); }
   .dolor-item.revelar:nth-child(2) { transition-delay: 0.06s; }
   .dolor-item.revelar:nth-child(3) { transition-delay: 0.12s; }
   .dolor-item.revelar:nth-child(4) { transition-delay: 0.18s; }
   .planes-grid .revelar:nth-child(2) { transition-delay: 0.08s; }
-  .planes-grid .revelar:nth-child(3) { transition-delay: 0.16s; }
   .equipo-grid .revelar:nth-child(2) { transition-delay: 0.06s; }
   .equipo-grid .revelar:nth-child(3) { transition-delay: 0.12s; }
-  .equipo-grid .revelar:nth-child(4) { transition-delay: 0.18s; }
 
   @keyframes pulso-sol {
     0%, 100% { box-shadow: 0 0 22px rgba(255,107,26,0.55); }
@@ -298,6 +353,7 @@
     .stat-item:nth-child(-n+1) { border-top: none; }
     .dolor-item { grid-template-columns: 56px 1fr; gap: 16px; }
     .franja { padding: 38px 24px; }
+    .cta-secundaria { margin-left: 0; margin-top: 14px; }
   }
 </style>
 </head>
@@ -310,31 +366,27 @@
         <div class="marca-sol"></div>
         <span class="nombre">Equipo<b>Virtual</b></span>
       </div>
-      <span class="tag">Para instaladores residenciales · EE. UU.</span>
+      <span class="tag">Para techadores e instaladores solares · EE. UU.</span>
     </div>
 
     <div class="hero-inner">
-      <span class="eyebrow-hero">78% de las ventas · primera respuesta</span>
-      <h1 class="claim">Su competencia tarda 47 horas.<span class="linea2">Usted puede tardar 60 segundos.</span></h1>
-      <p class="hero-sub">Cada minuto que un lead solar espera respuesta es venta que se enfría. Su Equipo Virtual responde al instante, cotiza, agenda la evaluación y le da seguimiento — 24/7, sin nómina.</p>
+      <span class="eyebrow-hero">El que contesta primero se queda con el cliente</span>
+      <h1 class="claim">Su competencia tarda horas.<span class="linea2">Usted puede tardar 60 segundos.</span></h1>
+      <p class="hero-sub">Cada mensaje que espera respuesta es un cliente que se enfría y le escribe a otro. Su Equipo Virtual contesta al instante por SMS, agenda la cita, la recuerda, y le da seguimiento — 24/7, sin contratar a nadie.</p>
 
       <div class="ventana-oro revelar">
         <div class="vo-callout-fila"><span class="txt">USTED, CON EQUIPO VIRTUAL: 60 SEG</span></div>
         <div class="vo-barra">
-          <div class="vo-seg-competencia"><span class="vo-label">PROMEDIO DE LA INDUSTRIA — 47 HORAS</span></div>
+          <div class="vo-seg-competencia"><span class="vo-label">EL QUE CONTESTA TARDE</span></div>
           <div class="vo-seg-usted"></div>
         </div>
         <div class="vo-pie">
-          <span>El lead pide cotización</span>
+          <span>El cliente pide información</span>
           <span><b>La ventana de oro</b> — antes de que se enfríe</span>
         </div>
       </div>
 
       <div class="stat-fila">
-        <div class="stat-item">
-          <div class="stat-num">78<span class="u">%</span></div>
-          <div class="stat-cap">de las ventas se las lleva quien responde primero</div>
-        </div>
         <div class="stat-item">
           <div class="stat-num">&lt;60<span class="u">seg</span></div>
           <div class="stat-cap">tiempo de respuesta con su Equipo Virtual activo</div>
@@ -343,12 +395,19 @@
           <div class="stat-num">24<span class="u">/7</span></div>
           <div class="stat-cap">incluye noches, fines de semana y días festivos</div>
         </div>
+        <div class="stat-item">
+          <div class="stat-num">0<span class="u">$</span></div>
+          <div class="stat-cap">de instalación — solo paga la mensualidad</div>
+        </div>
       </div>
 
-      <a class="cta-primaria" href="mailto:solarleadresponse623@gmail.com?subject=Quiero%20saber%20m%C3%A1s%20sobre%20respuesta%20instant%C3%A1nea%20a%20leads&body=Hola%2C%20me%20interesa%20saber%20c%C3%B3mo%20funciona.">
-        Ver cómo funciona en su negocio
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
-      </a>
+      <div>
+        <a class="cta-primaria" href="mailto:hola@mail.cesarbuilds.com?subject=Quiero%20saber%20m%C3%A1s%20sobre%20Equipo%20Virtual&amp;body=Hola%2C%20me%20interesa%20saber%20c%C3%B3mo%20funciona%20para%20mi%20negocio.">
+          Ver cómo funciona en su negocio
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+        </a>
+        <a class="cta-secundaria" href="#regalo">Ver un ejemplo gratis</a>
+      </div>
       <span class="cta-nota">Sin compromiso · respuesta el mismo día</span>
     </div>
   </div>
@@ -365,59 +424,59 @@
       <div class="calc-controles">
         <div class="calc-campo">
           <div class="calc-campo-cabeza">
-            <label for="rango-leads">Leads nuevos por semana</label>
+            <label for="rango-leads">Mensajes o llamadas nuevas por semana</label>
             <span class="calc-valor" id="val-leads">20</span>
           </div>
           <input type="range" id="rango-leads" min="5" max="80" value="20" step="1">
         </div>
         <div class="calc-campo">
           <div class="calc-campo-cabeza">
-            <label for="rango-ticket">Ticket promedio por instalación</label>
-            <span class="calc-valor" id="val-ticket">$20,000</span>
+            <label for="rango-ticket">Ticket promedio por trabajo</label>
+            <span class="calc-valor" id="val-ticket">$15,000</span>
           </div>
-          <input type="range" id="rango-ticket" min="10000" max="35000" value="20000" step="1000">
+          <input type="range" id="rango-ticket" min="3000" max="35000" value="15000" step="1000">
         </div>
       </div>
 
       <div class="calc-resultado">
         <div class="calc-resultado-num" id="val-resultado">$0</div>
-        <div class="calc-resultado-cap">en ventas al mes que quedan en riesgo por leads que no se contestan dentro de la ventana de oro</div>
-        <div class="calc-nota">Estimado con supuestos conservadores: 25% de sus leads semanales no reciben respuesta a tiempo, y de esos, 1 de cada 5 habría cerrado si se hubiera contestado primero. Su caso real puede variar.</div>
+        <div class="calc-resultado-cap">en ventas al mes que quedan en riesgo por clientes que no reciben respuesta a tiempo</div>
+        <div class="calc-nota">Estimado con supuestos conservadores tomados de datos de la industria solar: 25% de sus contactos semanales no reciben respuesta a tiempo, y de esos, 1 de cada 5 habría cerrado si se hubiera contestado primero. Su caso real puede variar.</div>
       </div>
     </div>
   </section>
 
   <section id="dolor" class="wrap">
-    <p class="sec-eyebrow">Así se pierde una venta de $20,000</p>
-    <h2 class="titulo">La línea de tiempo real de un lead perdido</h2>
-    <p class="titulo-sub">No es un caso hipotético — es lo que pasa hoy en la mayoría de empresas instaladoras.</p>
+    <p class="sec-eyebrow">Así se pierde un trabajo de $15,000</p>
+    <h2 class="titulo">La línea de tiempo real de un cliente perdido</h2>
+    <p class="titulo-sub">No es un caso hipotético — es lo que pasa hoy en la mayoría de empresas de techado y solar.</p>
     <div class="dolor-fila">
       <div class="dolor-item revelar">
         <div class="dolor-tiempo">VIE 9:14 PM</div>
         <div class="dolor-texto">
-          <h3>Un lead pide cotización</h3>
-          <p>Llenó el formulario de su sitio o comentó en un anuncio. Está listo para hablar — ahora mismo.</p>
+          <h3>Un cliente pide información</h3>
+          <p>Llenó el formulario de su sitio o le llamó después de ver un anuncio. Está listo para hablar — ahora mismo.</p>
         </div>
       </div>
       <div class="dolor-item revelar">
         <div class="dolor-tiempo">VIE 9:20 PM</div>
         <div class="dolor-texto">
           <h3>El competidor ya contestó</h3>
-          <p>Otra empresa con sistema de respuesta automática ya le escribió. El lead siente que "alguien sí se lo toma en serio".</p>
+          <p>Otra empresa con respuesta automática ya le escribió. El cliente siente que "alguien sí se lo toma en serio".</p>
         </div>
       </div>
       <div class="dolor-item revelar">
         <div class="dolor-tiempo">LUN 8:30 AM</div>
         <div class="dolor-texto">
           <h3>Su equipo ve el mensaje</h3>
-          <p>Primer día hábil. Contestan rápido, de buena fe — pero para entonces ya agendó evaluación con el otro.</p>
+          <p>Primer día hábil. Contestan rápido, de buena fe — pero para entonces ya agendó con el otro.</p>
         </div>
       </div>
       <div class="dolor-item revelar">
         <div class="dolor-tiempo">RESULTADO</div>
         <div class="dolor-texto">
-          <h3>Una instalación de $15,000–30,000, perdida</h3>
-          <p>No por precio, ni por calidad de trabajo — por 59 horas de silencio en el momento exacto que más importaba.</p>
+          <h3>Un trabajo de $8,000–30,000, perdido</h3>
+          <p>No por precio, ni por calidad de trabajo — por horas de silencio en el momento exacto que más importaba.</p>
         </div>
       </div>
     </div>
@@ -425,80 +484,118 @@
 
   <section class="wrap">
     <div class="franja revelar">
-      <span class="franja-eyebrow">No es un bot. Es el equipo que le falta.</span>
-      <h2>Responder rápido es solo el primer paso. El resto también se le cae.</h2>
-      <p class="sub">Un chatbot que solo contesta WhatsApp deja el resto igual: cotizar a mano, perder el hilo del seguimiento, no saber en qué va cada proyecto. Su Equipo Virtual hace las cuatro cosas juntas — como si contratara recepción, ventas y administración, sin nómina.</p>
+      <span class="franja-eyebrow">La oficina que le falta</span>
+      <h2>Contestar rápido es solo el primer paso.</h2>
+      <p class="sub">Un sistema que solo contesta un mensaje deja el resto igual: sin recordatorio de cita, sin volver a escribirle al cliente que se quedó callado. Su Equipo Virtual hace las tres cosas juntas — como si contratara recepción, sin nómina.</p>
     </div>
   </section>
 
   <section id="equipo" class="wrap">
     <p class="sec-eyebrow">Lo que hace su Equipo Virtual</p>
-    <h2 class="titulo">Cuatro personas en una sola herramienta</h2>
-    <p class="titulo-sub">Cada rol resuelve la parte del negocio que hoy se le cae entre las manos.</p>
+    <h2 class="titulo">Tres cosas, todo el tiempo</h2>
+    <p class="titulo-sub">Cada una resuelve la parte del negocio que hoy se le cae entre las manos.</p>
     <div class="equipo-grid">
       <div class="equipo-item revelar">
         <div class="equipo-rol">Recepción</div>
-        <h3>Responde cada lead en segundos</h3>
-        <p>WhatsApp, SMS, Messenger e Instagram — nadie espera 47 horas para saber si le van a contestar.</p>
+        <h3>Responde cada mensaje en segundos</h3>
+        <p>Por SMS, 24/7 — nadie espera hasta el lunes para saber si le van a contestar.</p>
       </div>
       <div class="equipo-item revelar">
-        <div class="equipo-rol">Ventas</div>
-        <h3>Cotiza y agenda la evaluación</h3>
-        <p>Cotizaciones con IA, agendado automático de la visita técnica — el lead avanza sin esperar a que alguien tenga tiempo.</p>
+        <div class="equipo-rol">Recordatorios</div>
+        <h3>Baja las inasistencias a citas</h3>
+        <p>Avisa antes de la visita para que el cliente no se le olvide y usted no pierda el viaje.</p>
       </div>
       <div class="equipo-item revelar">
         <div class="equipo-rol">Seguimiento</div>
-        <h3>No deja morir ningún lead</h3>
-        <p>Si pidió cotización y no contestó, le vuelve a escribir — sin que usted tenga que acordarse.</p>
-      </div>
-      <div class="equipo-item revelar">
-        <div class="equipo-rol">Administración</div>
-        <h3>Panel con todo su pipeline</h3>
-        <p>Qué proyectos están en curso, qué leads siguen calientes, cuánto ingreso espera — de un vistazo, sin buscar en WhatsApp.</p>
+        <h3>No deja morir a quien se quedó callado</h3>
+        <p>Si pidió información y no volvió a contestar, le vuelve a escribir — sin que usted tenga que acordarse.</p>
       </div>
     </div>
   </section>
 
+  <section id="regalo" class="wrap">
+    <p class="sec-eyebrow">Antes de que decida cualquier cosa</p>
+    <h2 class="titulo">Así de rápido trabajo, gratis</h2>
+    <p class="titulo-sub">Ya construí más de 60 de estos para negocios reales de techado y solar — y ninguno lo vio nadie más.</p>
+    <div class="regalo-card revelar">
+      <div class="regalo-icono">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6M16 6l-4-4-4 4M12 2v13"/></svg>
+      </div>
+      <div class="regalo-texto">
+        <h3>Un cotizador instantáneo con su marca</h3>
+        <p>Le da al visitante de su sitio un rango de precio al instante, con su logo y sus colores. Pruebe abajo un ejemplo genérico para ver cómo se siente — el suyo se lo mando por correo, en privado, nunca publicado junto al de otro negocio. Así ningún competidor suyo lo ve.</p>
+        <span class="aclara">Es un regalo, no parte de la mensualidad — se lo queda de cualquier forma, decida trabajar conmigo o no. El cotizador no mide su techo por satélite: le pregunta al visitante el tamaño, y usted confirma el precio real.</span>
+        <div class="regalo-ctas">
+          <a class="cta-primaria" style="margin-top:22px;" href="demo/estimador-su-empresa.html" target="_blank" rel="noopener">
+            Probar un ejemplo
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
+          </a>
+          <a class="cta-secundaria" style="margin-top:22px;" href="mailto:hola@mail.cesarbuilds.com?subject=Quiero%20mi%20cotizador%20con%20mi%20marca">Pedir el mío con mi marca</a>
+        </div>
+        <span class="aclara" style="margin-top:14px;">En este ejemplo el botón de enviar no manda a ningún correo real — es solo para que pruebe el cálculo. Cuando le arme el suyo, lo conecto a su bandeja de verdad.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="honestidad" class="wrap">
+    <p class="sec-eyebrow">Lo que sí, y lo que no</p>
+    <h2 class="titulo">Para decidir con la información completa</h2>
+    <div class="honestidad-grid">
+      <div class="honestidad-col si revelar">
+        <h3>✓ Sí hace</h3>
+        <ul>
+          <li>Contesta SMS 24/7 en menos de 60 segundos</li>
+          <li>Recuerda las citas para bajar inasistencias</li>
+          <li>Vuelve a escribirle a quien se quedó callado</li>
+          <li>Le da un cotizador con su marca, de regalo</li>
+        </ul>
+      </div>
+      <div class="honestidad-col no revelar">
+        <h3>✕ No hace</h3>
+        <ul>
+          <li>No mide su techo por satélite (para eso, Roofr lo hace mejor que nosotros)</li>
+          <li>No reemplaza un CRM completo</li>
+          <li>No responde llamadas por voz todavía — está en camino</li>
+          <li>Todavía no tengo un cliente de techado o solar con resultados medidos — usted sería de los primeros</li>
+        </ul>
+      </div>
+    </div>
+    <p class="honestidad-nota">Decirle lo que no hacemos es lo que hace creíble lo demás.</p>
+    <p class="honestidad-nota">Lo maneja una sola persona, no una agencia — pero quien contesta es el sistema automático, no yo a mano: sigue funcionando aunque esté dormido, en otra llamada, o de viaje.</p>
+  </section>
+
   <section id="planes" class="wrap">
-    <p class="sec-eyebrow">Planes</p>
-    <h2 class="titulo">Empiece sin arriesgar nada</h2>
-    <p class="titulo-sub">$0 de instalación en los tres planes. El equipo completo se paga solo con la primera venta que ya no se pierde.</p>
+    <p class="sec-eyebrow">Precio</p>
+    <h2 class="titulo">Un precio, sin letra chica</h2>
+    <p class="titulo-sub">$0 de instalación. Coordino la fecha en cuanto confirma sus datos.</p>
     <div class="planes-grid">
-      <div class="plan-card revelar">
-        <div class="nombre-plan">Essential</div>
-        <div class="precio">$700<span>/mes</span></div>
-        <div class="setup">$0 de instalación</div>
-        <ul>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Recepción: WhatsApp + SMS, 24/7 en &lt;60 seg</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Ventas: agendado automático de evaluación</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Administración: cotizaciones y clientes organizados</li>
-        </ul>
-        <a class="plan-cta" href="mailto:solarleadresponse623@gmail.com?subject=Me%20interesa%20el%20plan%20Essential">Elegir Essential</a>
-      </div>
       <div class="plan-card destacado revelar">
-        <span class="badge-destacado">Más elegido</span>
-        <div class="nombre-plan">Growth</div>
-        <div class="precio">$1,000<span>/mes</span></div>
-        <div class="setup">$0 de instalación</div>
+        <span class="badge-destacado">Oferta principal</span>
+        <div class="nombre-plan">Básico</div>
+        <div class="precio">$500<span>/mes</span></div>
+        <div class="setup">$0 de instalación · mínimo 3 meses</div>
         <ul>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Todo lo de Essential</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Seguimiento: nunca deja morir un lead frío</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Cotizaciones con IA + panel de pipeline</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>+Email, Messenger e Instagram DM</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Recepción 24/7 por SMS, respuesta en &lt;60 seg</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Recordatorios de cita automáticos</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Seguimiento a quien se quedó callado</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Cotizador con su marca, de regalo</li>
         </ul>
-        <a class="plan-cta" href="mailto:solarleadresponse623@gmail.com?subject=Me%20interesa%20el%20plan%20Growth">Elegir Growth</a>
+        <a class="plan-cta" href="mailto:hola@mail.cesarbuilds.com?subject=Me%20interesa%20el%20plan%20B%C3%A1sico">Elegir Básico</a>
       </div>
-      <div class="plan-card revelar">
-        <div class="nombre-plan">Elite</div>
-        <div class="precio">Desde $1,500<span>/mes</span></div>
-        <div class="setup">$0 de instalación</div>
+      <div class="plan-card proximamente revelar">
+        <span class="badge-proximamente">Muy pronto</span>
+        <div class="nombre-plan">Completo</div>
+        <div class="precio">$629<span>/mes</span></div>
+        <div class="setup">$0 de instalación · mínimo 3 meses</div>
         <ul>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Todo lo de Growth</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Respuesta de llamadas con voz IA</li>
-          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Integrado con su CRM solar + multi-zona</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>Todo lo del Básico</li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>+ Llamadas por teléfono contestadas por voz IA</li>
         </ul>
-        <a class="plan-cta" href="mailto:solarleadresponse623@gmail.com?subject=Me%20interesa%20el%20plan%20Elite">Elegir Elite</a>
+        <a class="plan-cta" href="mailto:hola@mail.cesarbuilds.com?subject=Lista%20de%20espera%20-%20plan%20Completo">Anotarme a la lista de espera</a>
       </div>
+    </div>
+    <div class="garantia-nota revelar">
+      <b>Garantía real:</b> "funcionando como se prometió" quiere decir esto, medible: responde en menos de 60 segundos, manda el recordatorio antes de cada cita, y le vuelve a escribir a quien se quedó callado. Si alguna de esas tres cosas no está pasando dentro de los primeros 30 días, sigo arreglándolo gratis hasta que funcione. No es reembolso de dinero — es que el sistema quede trabajando de verdad, y el cotizador se lo queda de cualquier forma.
     </div>
   </section>
 
@@ -508,31 +605,36 @@
     <div class="faq-wrap">
       <div class="faq-item revelar">
         <h3>¿Cómo responde tan rápido?</h3>
-        <p>Un sistema conectado a WhatsApp Business (y opcionalmente Messenger, Instagram y SMS) entiende la pregunta del lead y responde al instante — agenda la evaluación directo si el lead está listo.</p>
+        <p>Un sistema conectado a su número de SMS entiende el mensaje del cliente y responde al instante, día o noche. Cualquier cosa fuera de lo normal se le escala a usted con el contexto completo de la conversación.</p>
       </div>
       <div class="faq-item revelar">
-        <h3>¿Reemplaza a mi equipo de ventas?</h3>
-        <p>No. Responde y agenda lo repetitivo. Cualquier cosa fuera de lo normal — negociación, objeción fuerte, pregunta inusual — se le escala a su equipo con el contexto completo de la conversación.</p>
+        <h3>¿Reemplaza a mi equipo?</h3>
+        <p>No. Responde lo repetitivo y agenda. La negociación, una objeción fuerte o una pregunta inusual se le escala a usted.</p>
       </div>
       <div class="faq-item revelar">
         <h3>¿Cuánto tarda en estar listo?</h3>
-        <p>1–2 días para Essential. Hasta 1–2 semanas para Elite, si incluye integración con su CRM.</p>
+        <p>Coordino día y hora en cuanto confirma su número y sus datos — lo instalo yo mismo, así que se agenda directo conmigo.</p>
       </div>
       <div class="faq-item revelar">
         <h3>¿Hay compromiso mínimo?</h3>
         <p>3 meses — el tiempo que necesita el sistema para mostrar resultados reales. Después, mes a mes.</p>
+      </div>
+      <div class="faq-item revelar">
+        <h3>¿Contestan llamadas por teléfono?</h3>
+        <p>Todavía no con clientes reales — el plan Completo (voz por IA) está en las últimas pruebas. Si le interesa, escríbame y le aviso apenas esté activo.</p>
       </div>
     </div>
   </section>
 
   <section id="contacto" class="wrap">
     <div class="contacto-card revelar">
-      <h2 class="titulo">¿Le ha pasado perder una venta por tardar en contestar?</h2>
+      <h2 class="titulo">¿Le ha pasado perder un cliente por tardar en contestar?</h2>
       <p>Escríbame y le cuento cómo funciona, sin compromiso.</p>
-      <a class="cta-primaria" style="margin-top:0;" href="mailto:solarleadresponse623@gmail.com?subject=Quiero%20saber%20m%C3%A1s%20sobre%20respuesta%20instant%C3%A1nea%20a%20leads&body=Hola%2C%20me%20interesa%20saber%20c%C3%B3mo%20funciona.">
+      <a class="cta-primaria" style="margin-top:0;" href="mailto:hola@mail.cesarbuilds.com?subject=Quiero%20saber%20m%C3%A1s%20sobre%20Equipo%20Virtual&amp;body=Hola%2C%20me%20interesa%20saber%20c%C3%B3mo%20funciona%20para%20mi%20negocio.">
         Escribir ahora
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 6l4 4-4 4"/></svg>
       </a>
+      <p class="cta-nota" style="color:var(--muted);margin-top:18px;">¿Prefiere hablar antes de escribir? Ponga su teléfono en el correo y lo llamo yo.</p>
     </div>
   </section>
 
@@ -540,13 +642,18 @@
 
 <footer>
   <div class="marca-footer">Equipo<b>Virtual</b></div>
-  <p>Recepción, ventas y seguimiento — para instaladores solares residenciales en EE. UU.</p>
+  <p>Recepción, recordatorios y seguimiento — para techadores e instaladores solares residenciales en EE. UU.</p>
+  <p>Operado por una sola persona, no una agencia — por eso tomo pocos clientes al mes.</p>
 </footer>
 
 <script>
   var menosMov = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var revelar = document.querySelectorAll(".revelar");
   if (!menosMov && "IntersectionObserver" in window) {
+    // Solo se ocultan al vuelo si JS de verdad puede animarlas y revelarlas
+    // despues -- sin esta clase, .revelar se queda visible por CSS (ver
+    // regla .js-ok .revelar), asi que sin JS nunca se pierde contenido.
+    document.documentElement.classList.add("js-ok");
     var obs = new IntersectionObserver(function(entradas){
       entradas.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("visible"); obs.unobserve(e.target); } });
     }, { threshold: 0.12 });
@@ -555,8 +662,9 @@
     revelar.forEach(function(el){ el.classList.add("visible"); });
   }
 
-  // Calculadora de pérdida — 78% de ventas al que responde primero,
-  // 25% de leads semanales sin respuesta a tiempo (promedio conservador).
+  // Calculadora de pérdida — supuestos tomados de datos de la industria solar
+  // (25% de contactos semanales sin respuesta a tiempo, 20% de esos habría
+  // cerrado con respuesta a tiempo), usados aquí como referencia conservadora.
   var rangoLeads = document.getElementById("rango-leads");
   var rangoTicket = document.getElementById("rango-ticket");
   var valLeads = document.getElementById("val-leads");
@@ -576,8 +684,8 @@
   function calcular() {
     var leadsSemana = Number(rangoLeads.value);
     var ticket = Number(rangoTicket.value);
-    var TASA_SIN_RESPUESTA_A_TIEMPO = 0.25; // % de leads que no reciben respuesta dentro de la ventana de oro
-    var TASA_CIERRE_SI_RESPONDIA_PRIMERO = 0.20; // % de esos leads que habría cerrado con respuesta a tiempo
+    var TASA_SIN_RESPUESTA_A_TIEMPO = 0.25;
+    var TASA_CIERRE_SI_RESPONDIA_PRIMERO = 0.20;
     var leadsEnRiesgoSemana = leadsSemana * TASA_SIN_RESPUESTA_A_TIEMPO;
     var ventasEnRiesgoSemana = leadsEnRiesgoSemana * TASA_CIERRE_SI_RESPONDIA_PRIMERO;
     var perdidaMensual = ventasEnRiesgoSemana * ticket * 4.33;
@@ -595,6 +703,7 @@
     rangoTicket.addEventListener("input", calcular);
     calcular();
   }
+
 </script>
 
 </body>

@@ -1,0 +1,880 @@
+<meta charset="utf-8">
+<title>Instant Estimate — Su Empresa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Design tokens. One scale, one set of greys, one radius family. */
+  :root {
+    /* --brand es la IDENTIDAD y no se toca nunca: si se oscurece hasta que
+       contraste con blanco, deja de ser la marca del prospecto. Lemon Seed
+       (amarillo #F5C518) acababa recibiendo un olivo #847211 -- un fallo en
+       la competencia exacta que se esta vendiendo.
+       El contraste se resuelve cambiando la TINTA encima, no el color. */
+    --brand: #ff6b1a;
+    --brand-ink: #111111;      /* blanco o casi negro, lo calcula el generador */
+    --brand-dark: #c65314;     /* solo para el :hover del boton */
+
+    --ink:      #0f1115;
+    --ink-2:    #3d434e;
+    --muted:    #6b7280;
+    --line:     #e4e6ea;
+    --line-2:   #f0f1f4;
+    --surface:  #ffffff;
+    --bg:       #f4f5f7;
+    --ok:       #0f6b40;
+    --danger:   #b42318;
+
+    /* 4pt spacing scale — nothing off-grid */
+    --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+    --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+
+    --r-sm: 6px; --r-md: 10px; --r-lg: 14px;
+    --shadow: 0 1px 2px rgba(16,24,40,.05), 0 1px 3px rgba(16,24,40,.06);
+    --shadow-lg: 0 4px 6px -2px rgba(16,24,40,.05), 0 12px 16px -4px rgba(16,24,40,.08);
+  }
+
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI Variable",
+                 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "cv05" 1, "ss01" 1;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: var(--s5) var(--s4);
+  }
+  @media (max-width: 560px) { body { padding: var(--s3); } }
+
+  .app { max-width: 1080px; margin: 0 auto; }
+
+  /* ---------- Top bar: real lockup, not a colour band ---------- */
+  .bar {
+    display: flex; align-items: center; gap: var(--s3);
+    padding: var(--s3) var(--s5);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    border-bottom: none;
+  }
+  .bar .mark {
+    width: 30px; height: 30px; border-radius: var(--r-sm);
+    background: var(--brand); color: var(--brand-ink); flex: none;
+    display: grid; place-items: center;
+    font-size: 13px; font-weight: 700; letter-spacing: -.02em;
+  }
+  .bar .who { font-size: 15px; font-weight: 650; letter-spacing: -.01em; }
+  .bar .rule { width: 1px; height: 20px; background: var(--line); }
+  .bar .what { font-size: 13px; color: var(--muted); }
+  .bar .tag {
+    margin-left: auto; font-size: 11px; font-weight: 600;
+    letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ok); background: color-mix(in srgb, var(--ok) 9%, transparent);
+    padding: var(--s1) var(--s2); border-radius: 100px;
+  }
+  @media (max-width: 640px) { .bar .what, .bar .rule { display: none; } }
+
+  /* ---------- Two panes: form left, live document right ---------- */
+  /* El panel del formulario necesita ~470px. Por debajo de eso los <select>
+     de dos columnas cortan su propio texto con puntos suspensivos, y ese es
+     el primer fallo que el prospecto ve. Medido con test_demo_render.py:
+     con 440px el ancho util por control queda en 140px y "None, new
+     construction" pide 155px. */
+  .panes {
+    display: grid; grid-template-columns: minmax(440px, 480px) 1fr;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  @media (max-width: 980px) { .panes { grid-template-columns: 1fr; } }
+
+  .pane-form { padding: var(--s5); border-right: 1px solid var(--line); }
+  .pane-doc  { padding: var(--s5); background: var(--line-2); }
+  @media (max-width: 980px) {
+    .pane-form { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    .pane-form, .pane-doc { padding: var(--s4); }
+  }
+
+  /* ---------- Form ---------- */
+  .sec { margin-bottom: var(--s5); }
+  .sec:last-of-type { margin-bottom: var(--s4); }
+  .sec > h2 {
+    font-size: 11px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: var(--s3);
+  }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+  @media (max-width: 420px) { .pair { grid-template-columns: 1fr; } }
+  .f { margin-bottom: var(--s3); }
+  .f:last-child { margin-bottom: 0; }
+
+  label {
+    display: block; font-size: 13px; font-weight: 550;
+    color: var(--ink-2); margin-bottom: var(--s1);
+  }
+  .ctl { position: relative; }
+  input, select {
+    width: 100%; height: 40px; padding: 0 var(--s3);
+    font-size: 14.5px; font-family: inherit; color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--r-sm);
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  input:hover, select:hover { border-color: #c8ccd4; }
+  input:focus, select:focus {
+    outline: none; border-color: var(--brand);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+  }
+  input[data-suffix] { padding-right: 46px; }
+  .suffix {
+    position: absolute; right: var(--s3); top: 50%; transform: translateY(-50%);
+    font-size: 12.5px; color: var(--muted); pointer-events: none;
+  }
+  /* Native select chrome is the loudest "someone else built this" tell. */
+  select {
+    appearance: none; -webkit-appearance: none;
+    padding-right: 34px; cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%236b7280' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right var(--s3) center;
+  }
+  .f.bad input, .f.bad select { border-color: var(--danger); }
+  .msg { display: none; font-size: 12.5px; color: var(--danger); margin-top: var(--s1); }
+  .f.bad .msg { display: block; }
+
+  /* ---------- Lead capture: the part an agency actually buys ---------- */
+  .lead {
+    margin-top: var(--s5); padding-top: var(--s4);
+    border-top: 1px solid var(--line);
+  }
+  .btn {
+    width: 100%; height: 44px; font-size: 15px; font-weight: 600;
+    font-family: inherit; color: var(--brand-ink); background: var(--brand);
+    border: none; border-radius: var(--r-sm); cursor: pointer;
+    transition: background-color .15s ease, transform .06s ease, box-shadow .15s ease;
+  }
+  .btn:hover { background: var(--brand-dark); box-shadow: var(--shadow); }
+  .btn:active { transform: translateY(1px); }
+  .btn.ghost {
+    background: var(--surface); color: var(--ink-2);
+    border: 1px solid var(--line); height: 38px; font-size: 14px;
+  }
+  .btn.ghost:hover { background: var(--line-2); }
+  .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); margin-top: var(--s3); }
+  .fineprint { font-size: 12px; color: var(--muted); margin-top: var(--s2); text-align: center; }
+
+  /* ---------- The estimate document ---------- */
+  .doc {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: var(--s5);
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 560px) { .doc { padding: var(--s4); } }
+
+  .doc-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: var(--s4); padding-bottom: var(--s4); margin-bottom: var(--s4);
+    border-bottom: 1px solid var(--line);
+  }
+  .doc-head h3 { font-size: 19px; font-weight: 680; letter-spacing: -.02em; }
+  .doc-head .for { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .doc-head .when { font-size: 12.5px; color: var(--muted); text-align: right; flex: none; }
+
+  .items { width: 100%; border-collapse: collapse; }
+  .items th {
+    text-align: left; font-size: 11px; font-weight: 650; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted);
+    padding: 0 var(--s2) var(--s2); border-bottom: 1px solid var(--line);
+  }
+  .items th.n, .items td.n { text-align: right; }
+  .items td {
+    padding: var(--s3) var(--s2); border-bottom: 1px solid var(--line-2);
+    font-size: 14px; vertical-align: top;
+  }
+  .items tr:hover td { background: color-mix(in srgb, var(--brand) 3%, transparent); }
+  .items .lbl { font-weight: 550; }
+  .items .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .n { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+
+  /* Adjustments were invisible before — folded silently into unit price. */
+  .ladder { margin-top: var(--s4); }
+  .ladder .row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 14px; padding: var(--s2) var(--s2);
+  }
+  .ladder .row.adj { color: var(--ink-2); }
+  .ladder .row.adj .why { font-size: 12.5px; color: var(--muted); }
+  .ladder .row.sum {
+    border-top: 1px solid var(--line); margin-top: var(--s1);
+    padding-top: var(--s3); font-weight: 600;
+  }
+
+  .total {
+    margin-top: var(--s4); padding: var(--s4);
+    background: var(--surface);
+    border: 1px solid var(--line); border-left: 3px solid var(--brand);
+    border-radius: var(--r-sm);
+  }
+  .total .lbl { font-size: 12.5px; color: var(--muted); }
+  .total .amt {
+    font-size: clamp(28px, 7vw, 40px); font-weight: 700; letter-spacing: -.03em;
+    margin: var(--s1) 0 var(--s2); line-height: 1.1;
+  }
+  .total .note { font-size: 13px; color: var(--ink-2); max-width: 46ch; }
+
+  .assume { margin-top: var(--s5); }
+  .assume h4 { font-size: 13px; font-weight: 650; margin-bottom: var(--s2); }
+  .assume ul { list-style: none; }
+  .assume li {
+    font-size: 13px; color: var(--ink-2); padding-left: var(--s4);
+    position: relative; margin-bottom: var(--s1);
+  }
+  .assume li::before {
+    content: ""; position: absolute; left: var(--s2); top: 8px;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--brand);
+  }
+
+  .valid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3);
+    margin-top: var(--s5); padding-top: var(--s4);
+    border-top: 1px solid var(--line);
+  }
+  @media (max-width: 560px) { .valid { grid-template-columns: 1fr; } }
+  .valid span {
+    display: block; font-size: 10.5px; font-weight: 650; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+  }
+  .valid strong { font-size: 14px; font-weight: 600; }
+
+  .doc-foot {
+    margin-top: var(--s4); padding-top: var(--s3);
+    border-top: 1px solid var(--line-2);
+    font-size: 12.5px; color: var(--muted);
+  }
+  /* La agencia va AQUI, no en la linea del contratista. Poner
+     "Skill Mammoth · Be the contractor who answers first" en el pie ponia a
+     la agencia en el lugar de su propio cliente -- y eso le dice a un dueno
+     de agencia que no entiendes el negocio white label que le vendes. */
+  .doc-foot .by {
+    margin-top: var(--s2); font-size: 11.5px; opacity: .75;
+  }
+
+  /* ---------- Empty state: never open on a bare form ---------- */
+  .ghost-doc .skel {
+    height: 12px; border-radius: 4px;
+    background: linear-gradient(90deg, var(--line-2) 25%, #e8eaee 37%, var(--line-2) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.6s ease infinite;
+    margin-bottom: var(--s2);
+  }
+  @keyframes shimmer { 0% { background-position: 100% 0 } 100% { background-position: -100% 0 } }
+  .ghost-doc .cap {
+    font-size: 13px; color: var(--muted); text-align: center;
+    margin-top: var(--s5);
+  }
+
+  /* Staggered reveal so the estimate builds instead of teleporting. */
+  .reveal > * { animation: rise .34s cubic-bezier(.2,.7,.3,1) backwards; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px) } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  /* ---------- Print: a branded document, not a headless page ---------- */
+  .print-head { display: none; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .bar, .pane-form, .btn, .btn-row, .fineprint { display: none !important; }
+    .panes { grid-template-columns: 1fr; border: none; box-shadow: none; }
+    .pane-doc { background: #fff; padding: 0; }
+    .doc { border: none; box-shadow: none; padding: 0; }
+    .print-head {
+      display: flex; align-items: center; gap: 10px;
+      padding-bottom: 12px; margin-bottom: 18px;
+      border-bottom: 2px solid var(--brand);
+    }
+    .print-head .mark {
+      width: 28px; height: 28px; border-radius: 5px; background: var(--brand);
+      color: #fff; display: grid; place-items: center;
+      font-size: 12px; font-weight: 700;
+    }
+    .print-head .who { font-size: 15px; font-weight: 700; }
+    .print-head .meta { margin-left: auto; font-size: 11px; color: #555; }
+  }
+</style>
+
+<div class="app">
+  <div class="bar">
+    <div class="mark" id="b-mark">SE</div>
+    <div class="who" id="b-who">Su Empresa</div>
+    <div class="rule"></div>
+    <div class="what">Instant estimate</div>
+    <!-- Decia "Same-day". El propio analisis de competencia concluyo que el
+         pitch de VELOCIDAD esta perdido (9+ productos lo hacen). Lo que la
+         competencia NO puede responder es de quien es la marca. -->
+    <div class="tag">Your brand</div>
+  </div>
+
+  <div class="trustlines" id="trustlines" style="display:none;font-size:12px;color:var(--muted);
+       padding:var(--s2) var(--s5);background:var(--surface);border:1px solid var(--line);
+       border-top:none;text-align:center"></div>
+
+  <div class="panes">
+    <!-- ---------- Form ---------- -->
+    <div class="pane-form">
+      <form id="f" novalidate>
+        <div class="sec">
+          <h2>Property</h2>
+          <div class="f">
+            <label for="name">Homeowner name</label>
+            <div class="ctl"><input id="name" placeholder="John Smith" autocomplete="name"></div>
+            <div class="msg">We need a name for the estimate.</div>
+          </div>
+          <div class="f">
+            <label for="addr">Property address</label>
+            <div class="ctl"><input id="addr" placeholder="123 Oak St, San Antonio, TX" autocomplete="street-address"></div>
+            <div class="msg">Add the address so we can check access and permits.</div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2>Roof</h2>
+          <div class="pair">
+            <div class="f">
+              <label for="squares">Roof size</label>
+              <div class="ctl">
+                <input id="squares" type="number" inputmode="decimal" min="1" max="200"
+                       step="0.5" value="24" data-suffix>
+                <span class="suffix">sq</span>
+              </div>
+              <div class="msg">Enter a size between 1 and 200 squares.</div>
+            </div>
+            <div class="f">
+              <label for="material">Material</label>
+              <div class="ctl">
+                <select id="material">
+                  <option value="arch3">Architectural, 30 yr</option>
+                  <option value="arch5">Architectural, 50 yr</option>
+                  <option value="three">3-tab shingles</option>
+                  <option value="metal">Standing seam metal</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="pair">
+            <div class="f">
+              <label for="pitch">Pitch</label>
+              <div class="ctl">
+                <select id="pitch">
+                  <option value="1">Standard (4/12&ndash;7/12)</option>
+                  <option value="1.18">Steep (8/12&ndash;10/12)</option>
+                  <option value="1.35">Very steep (11/12+)</option>
+                </select>
+              </div>
+            </div>
+            <div class="f">
+              <label for="layers">Layers to tear off</label>
+              <div class="ctl">
+                <select id="layers">
+                  <option value="1">1 layer</option>
+                  <option value="2">2 layers</option>
+                  <option value="0">None, new construction</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="pair">
+            <div class="f">
+              <label for="ridge">Ridge vent</label>
+              <div class="ctl">
+                <input id="ridge" type="number" inputmode="decimal" min="0" max="500"
+                       value="45" data-suffix>
+                <span class="suffix">ft</span>
+              </div>
+            </div>
+            <div class="f">
+              <label for="access">Access</label>
+              <div class="ctl">
+                <select id="access">
+                  <option value="1">Normal &mdash; driveway</option>
+                  <option value="1.12">Limited &mdash; tight lot</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How most roofs actually get paid for. First question a roofer
+             asks a real lead — asking it here means they open the callback
+             already knowing, instead of finding out mid-call. -->
+        <div class="sec">
+          <h2>How will this be paid for?</h2>
+          <div class="f">
+            <div class="ctl">
+              <select id="payment">
+                <option value="cash">Paying out of pocket</option>
+                <option value="insurance">Insurance claim</option>
+                <option value="financing">Interested in financing</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- The lead is the product. Without this it is a calculator. -->
+        <div class="lead">
+          <div class="sec" style="margin-bottom:var(--s3)">
+            <h2>Send me this estimate</h2>
+            <div class="f">
+              <label for="email">Email</label>
+              <div class="ctl"><input id="email" type="email" inputmode="email"
+                     placeholder="you@email.com" autocomplete="email"></div>
+              <div class="msg">Check the email address.</div>
+            </div>
+            <div class="f">
+              <label for="phone">Phone <span style="color:var(--muted);font-weight:400">— optional</span></label>
+              <div class="ctl"><input id="phone" type="tel" inputmode="tel"
+                     placeholder="(210) 555-0134" autocomplete="tel"></div>
+            </div>
+          </div>
+          <button type="submit" class="btn" id="submit">Email me this estimate</button>
+          <button type="button" class="btn ghost" id="btn-call" href="tel:"
+                  style="display:none;margin-top:var(--s2)">Or call us now</button>
+          <div class="fineprint">This is an estimate, not a quote — the final
+            price is confirmed once we see the roof in person. No obligation,
+            we follow up once.</div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ---------- Live document ---------- -->
+    <div class="pane-doc">
+      <div class="doc" id="doc">
+        <div class="print-head">
+          <div class="mark" id="p-mark">SE</div>
+          <div class="who" id="p-who">Su Empresa</div>
+          <div class="meta" id="p-meta"></div>
+        </div>
+
+        <div id="ghost" class="ghost-doc">
+          <div class="skel" style="width:52%;height:18px;margin-bottom:var(--s4)"></div>
+          <div class="skel" style="width:88%"></div>
+          <div class="skel" style="width:76%"></div>
+          <div class="skel" style="width:81%"></div>
+          <div class="skel" style="width:64%"></div>
+          <div class="skel" style="width:100%;height:56px;margin-top:var(--s4)"></div>
+          <p class="cap">Your estimate builds as you fill in the roof.</p>
+        </div>
+
+        <div id="out" style="display:none">
+          <div class="doc-head">
+            <div>
+              <h3 id="o-title">Roof Replacement</h3>
+              <div class="for" id="o-for">Prepared for your property</div>
+            </div>
+            <div class="when" id="o-when"></div>
+          </div>
+
+          <table class="items">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th class="n">Qty</th>
+                <th class="n">Unit</th>
+                <th class="n">Total</th>
+              </tr>
+            </thead>
+            <tbody id="o-items"></tbody>
+          </table>
+
+          <div class="ladder" id="o-ladder"></div>
+
+          <div class="total">
+            <div class="lbl">Estimated total</div>
+            <div class="amt n" id="o-range">$0</div>
+            <p class="note">
+              Based on the measurements above. The final invoice lands in this
+              range unless we find something we could not see &mdash; and if we
+              do, you hear about it <strong>before</strong> we do the work.
+            </p>
+          </div>
+
+          <div class="assume">
+            <h4>What this assumes</h4>
+            <ul id="o-assume"></ul>
+          </div>
+
+          <div class="valid">
+            <div><span>Price valid through</span><strong id="o-valid"></strong></div>
+            <div><span>We can start</span><strong id="o-start"></strong></div>
+          </div>
+
+          <div class="doc-foot" id="o-foot">
+            Questions on any line item? Reply to this email or call &mdash; you
+            will get a real answer the same day.<br>
+            Your Roofing Company &middot; Family owned and operated
+            <div class="by">Estimator built by Su Empresa</div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn ghost" onclick="window.print()">Print or save PDF</button>
+            <button type="button" class="btn ghost" id="reset">Start over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* Pricing lives in one place so the contractor can edit it without
+   touching markup. Per square unless noted. */
+const MATERIALS = {
+  arch3: { label: "Architectural shingles, 30-year, installed", price: 385 },
+  arch5: { label: "Architectural shingles, 50-year, installed", price: 465 },
+  three: { label: "3-tab shingles, installed",                  price: 310 },
+  metal: { label: "Standing seam metal, installed",             price: 950 }
+};
+const TEAROFF  = 145;   // per square, per layer
+const UNDERLAY = 62;    // per square
+const RIDGE_LF = 12;    // per linear foot
+const MARGIN   = 0.15;  // range is base to base +15%
+
+/* El sustantivo de lo que se retira, en un solo sitio. Antes se generaba
+   con un literal ("1 layer of existing roofing") y las sustituciones por
+   vertical nunca alcanzaban el plural que arma el JavaScript: el demo de
+   HVAC acababa diciendo "1 layer existing system removed", que a un
+   instalador de aire le dice que nadie leyo lo que se le mando. */
+const REMOVAL = { uno: "layer", varios: "layers", que: "existing roofing" };
+
+/* A dónde va el lead cuando alguien lo manda. Se llena por contratista al
+   instalar (ver ENTREGA-DIA-1.md) — sin esto configurado, el formulario
+   sigue guardando localmente pero avisa en pantalla que no se envió a
+   nadie, en vez de fingir éxito. */
+const LEAD_CONFIG = {
+  leadEndpoint: "",          // ej. "https://formspree.io/f/xxxxxxx" — Tú creas el Formspree por cliente
+  keepLocalBackup: true,     // localStorage como respaldo si el fetch falla
+  contractorPhone: "",       // ej. "+12105550134" — si está vacío, el botón de llamada no se muestra
+  // Líneas de confianza. Prometer una garantía que el contratista no da es
+  // un problema legal PARA ÉL, no para nosotros — por eso cada una se
+  // omite si viene vacía, en vez de un texto genérico de relleno.
+  licenseLine: "",           // ej. "TX License #RC-123456"
+  warranty: "",              // ej. "10-year workmanship warranty"
+  financingLine: "",         // ej. "Financing available, 0% for 12 months"
+};
+
+const $ = id => document.getElementById(id);
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+const longDate = d => d.toLocaleDateString("en-US",
+  { month: "long", day: "numeric", year: "numeric" });
+
+let touched = false;   // don't show the document until they engage
+
+function compute() {
+  const campo  = $("squares");
+  /* Respeta el max del campo. Sin esto, un valor pegado o tecleado de mas
+     produce totales absurdos (24 "toneladas" a precio de tonelada = $69,000
+     por un aire de casa), y ese numero es lo primero que un contratista mira. */
+  const tope   = parseFloat(campo.max) || Infinity;
+  const sq     = Math.min(parseFloat(campo.value) || 0, tope);
+  const matKey = $("material").value;
+  const pitch  = parseFloat($("pitch").value);
+  const layers = parseInt($("layers").value, 10);
+  const ridge  = parseFloat($("ridge").value) || 0;
+  const access = parseFloat($("access").value);
+
+  if (sq <= 0) return null;
+
+  const items = [];
+  if (layers > 0) {
+    items.push({
+      label: "Tear off and dispose existing roof",
+      sub: layers + " " + (layers > 1 ? REMOVAL.varios : REMOVAL.uno),
+      qty: sq, unit: TEAROFF * layers, total: sq * TEAROFF * layers
+    });
+  }
+  const m = MATERIALS[matKey];
+  items.push({ label: m.label, sub: "Material and labor",
+               qty: sq, unit: m.price, total: sq * m.price });
+  items.push({ label: "Synthetic underlayment and ice/water shield",
+               sub: "Full coverage", qty: sq, unit: UNDERLAY, total: sq * UNDERLAY });
+  if (ridge > 0) {
+    items.push({ label: "Ridge vent replacement", sub: "Continuous ventilation",
+                 qty: ridge, unit: RIDGE_LF, total: ridge * RIDGE_LF });
+  }
+
+  const subtotal = items.reduce((s, i) => s + i.total, 0);
+
+  /* These multipliers used to be folded silently into the unit price, which
+     made the estimate look arbitrary. Showing them is both honest and the
+     thing that makes a homeowner trust the number. */
+  const adjustments = [];
+  if (pitch > 1) {
+    adjustments.push({
+      label: "Steep pitch",
+      why: pitch >= 1.35 ? "11/12 and up, safety equipment required"
+                         : "8/12 to 10/12, slower install",
+      amount: subtotal * (pitch - 1)
+    });
+  }
+  if (access > 1) {
+    adjustments.push({
+      label: "Limited access",
+      why: "Tight lot, extra handling for material and debris",
+      amount: subtotal * (access - 1)
+    });
+  }
+
+  const base = subtotal + adjustments.reduce((s, a) => s + a.amount, 0);
+  return { items, subtotal, adjustments, base, sq, pitch, layers };
+}
+
+/* Count the total up rather than snapping it, so it reads as software. */
+let raf = null;
+function animateTotal(el, from, to) {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !from) {
+    el.textContent = money(to) + " – " + money(to * (1 + MARGIN));
+    return;
+  }
+  cancelAnimationFrame(raf);
+  const t0 = performance.now(), dur = 420;
+  const step = now => {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    const v = from + (to - from) * e;
+    el.textContent = money(v) + " – " + money(v * (1 + MARGIN));
+    if (p < 1) raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+
+let lastBase = 0;
+
+function render() {
+  const r = compute();
+  const ghost = $("ghost"), out = $("out");
+
+  if (!r || !touched) {
+    ghost.style.display = "";
+    out.style.display = "none";
+    return;
+  }
+  const first = out.style.display === "none";
+  ghost.style.display = "none";
+  out.style.display = "";
+  if (first) {
+    out.classList.remove("reveal");
+    void out.offsetWidth;
+    out.classList.add("reveal");
+    Array.from(out.children).forEach((c, i) => {
+      c.style.animationDelay = (i * 45) + "ms";
+    });
+  }
+
+  $("o-items").innerHTML = r.items.map(i => `
+    <tr>
+      <td><div class="lbl">${i.label}</div><div class="sub">${i.sub}</div></td>
+      <td class="n">${i.qty}</td>
+      <td class="n">${money(i.unit)}</td>
+      <td class="n">${money(i.total)}</td>
+    </tr>`).join("");
+
+  $("o-ladder").innerHTML = [
+    `<div class="row"><span>Subtotal</span><span class="n">${money(r.subtotal)}</span></div>`,
+    ...r.adjustments.map(a => `
+      <div class="row adj">
+        <span>${a.label}<br><span class="why">${a.why}</span></span>
+        <span class="n">+ ${money(a.amount)}</span>
+      </div>`),
+    `<div class="row sum"><span>Estimate base</span><span class="n">${money(r.base)}</span></div>`
+  ].join("");
+
+  animateTotal($("o-range"), lastBase, r.base);
+  lastBase = r.base;
+
+  const name = $("name").value.trim();
+  const addr = $("addr").value.trim();
+  $("o-for").textContent = name || addr
+    ? "Prepared for " + [name, addr].filter(Boolean).join(" — ")
+    : "Prepared for your property";
+  $("o-when").textContent = longDate(new Date());
+
+  $("o-assume").innerHTML = [
+    "Existing decking is sound; hidden rot is quoted separately",
+    r.layers > 0
+      ? `${r.layers} ${r.layers > 1 ? REMOVAL.varios : REMOVAL.uno} of `
+        + `${REMOVAL.que} removed and hauled away`
+      : "New construction, no tear-off included",
+    r.pitch > 1
+      ? "Steep-pitch roof; pricing reflects added labor and safety requirements"
+      : "Standard-pitch roof with normal crew and dumpster access",
+    "Permits included. Structural repairs, if needed, are quoted separately"
+  ].map(a => `<li>${a}</li>`).join("");
+
+  const valid = new Date(); valid.setDate(valid.getDate() + 30);
+  const start = new Date(); start.setDate(start.getDate() + 14);
+  $("o-valid").textContent = longDate(valid);
+  $("o-start").textContent = longDate(start);
+
+  const meta = $("p-meta");
+  if (meta) meta.textContent = longDate(new Date());
+}
+
+/* Validation lives next to the field it belongs to, not under the button. */
+function bad(id, isBad) {
+  $(id).closest(".f").classList.toggle("bad", isBad);
+  return !isBad;
+}
+
+$("f").addEventListener("submit", e => {
+  e.preventDefault();
+  const email = $("email").value.trim();
+  const rawPhone = $("phone").value.trim();
+  const digits = rawPhone.replace(/\D/g, "");
+  // Optional but valid is the rule: empty phone is fine (they only want
+  // email), but if they DID type something, it has to be a real 10-digit
+  // US number — a mistyped phone means the contractor calls a dead line
+  // and writes the lead off as fake.
+  const okPhone = bad("phone", rawPhone !== "" && digits.length !== 10);
+  const okEmail = bad("email", !/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email));
+  const okName  = bad("name", !$("name").value.trim());
+  const okSq    = bad("squares", !(parseFloat($("squares").value) > 0));
+  if (!(okEmail && okName && okSq && okPhone)) {
+    document.querySelector(".f.bad input").focus();
+    return;
+  }
+
+  /* In a live install this posts to the contractor's CRM (Formspree, set
+     LEAD_CONFIG.leadEndpoint per client). This is the ONLY thing standing
+     between a homeowner's info and the contractor ever seeing it — it has
+     to actually send, and if it can't, it has to say so on screen instead
+     of showing a fake "Sent". */
+  const lead = {
+    name: $("name").value.trim(),
+    address: $("addr").value.trim(),
+    email, phone: $("phone").value.trim(),
+    estimate: lastBase,
+    range: [lastBase, lastBase * (1 + MARGIN)],
+    payment: $("payment").value,
+    spec: {
+      squares: $("squares").value, material: $("material").value,
+      pitch: $("pitch").value, layers: $("layers").value,
+      ridge: $("ridge").value, access: $("access").value
+    },
+    at: new Date().toISOString()
+  };
+
+  /* Local backup first. If the network call fails, the lead still exists.
+     A lead that only lives in a fetch() that timed out is a lead you never
+     knew you had — the failure is silent, which is the worst kind. */
+  if (LEAD_CONFIG.keepLocalBackup) {
+    try {
+      const saved = JSON.parse(localStorage.getItem("estimates") || "[]");
+      saved.push(lead);
+      localStorage.setItem("estimates", JSON.stringify(saved));
+    } catch (err) {
+      /* Private browsing or storage full. Not fatal — keep going. */
+      console.warn("Local backup unavailable:", err.message);
+    }
+  }
+
+  const b = $("submit");
+  const restore = () => setTimeout(() => {
+    b.textContent = "Email me this estimate";
+    b.style.background = "";
+    b.disabled = false;
+  }, 3200);
+
+  b.disabled = true;
+
+  if (LEAD_CONFIG.leadEndpoint) {
+    b.textContent = "Sending…";
+    fetch(LEAD_CONFIG.leadEndpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(lead)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        b.textContent = "Sent — check your inbox";
+        b.style.background = "var(--ok)";
+        restore();
+      })
+      .catch(err => {
+        /* Tell the truth on screen. A homeowner who thinks they submitted
+           and never hears back is a lost customer AND a bad review. */
+        console.error("Lead send failed:", err.message, lead);
+        b.textContent = "Couldn't send — please call us";
+        b.style.background = "var(--danger)";
+        restore();
+      });
+  } else {
+    /* No endpoint configured yet (demo, or not installed): saved locally,
+       but the button must NOT claim it was sent anywhere — a demo shown to
+       a prospect that says "Sent" when nothing was configured is the exact
+       bug this replaces. */
+    console.log("LEAD (no endpoint configured — saved to localStorage only)", lead);
+    b.textContent = "Saved — no inbox connected yet";
+    b.style.background = "var(--danger)";
+    restore();
+  }
+});
+
+["squares","material","pitch","layers","ridge","access","name","addr"]
+  .forEach(id => {
+    const el = $(id);
+    const ev = el.tagName === "SELECT" ? "change" : "input";
+    el.addEventListener(ev, () => { touched = true; render(); });
+  });
+
+$("reset").addEventListener("click", () => {
+  $("f").reset();
+  touched = false; lastBase = 0;
+  document.querySelectorAll(".f.bad").forEach(f => f.classList.remove("bad"));
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+/* A "call us" button with no number behind it is worse than no button —
+   the homeowner taps it, nothing happens, and it reads as broken. Only
+   show it once a real phone is configured for this contractor. */
+(function initCallButton() {
+  const digits = (LEAD_CONFIG.contractorPhone || "").replace(/\D/g, "");
+  const btn = $("btn-call");
+  if (!btn) return;
+  if (digits.length >= 10) {
+    btn.setAttribute("href", "tel:" + LEAD_CONFIG.contractorPhone);
+    btn.textContent = "Or call us now — " + LEAD_CONFIG.contractorPhone;
+    btn.style.display = "";
+    btn.addEventListener("click", () => {
+      window.location.href = "tel:" + LEAD_CONFIG.contractorPhone;
+    });
+  } else {
+    btn.removeAttribute("href");
+    btn.style.display = "none";
+  }
+})();
+
+/* Only show trust lines the contractor actually gave us. A generic
+   "Licensed & Insured" with no real license number is worse than nothing
+   — it reads as filler, and if it's flat wrong it's a legal problem for
+   THEM, not us. */
+(function initTrustlines() {
+  const lineas = [LEAD_CONFIG.licenseLine, LEAD_CONFIG.warranty, LEAD_CONFIG.financingLine]
+    .filter(t => t && t.trim());
+  const el = $("trustlines");
+  if (!el) return;
+  if (lineas.length) {
+    el.textContent = lineas.join("  ·  ");
+    el.style.display = "";
+  }
+})();
+
+render();
+</script>
