@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cesarinrosales3108-ui.github.io/cesar-dental-ai/sitemap.xml
